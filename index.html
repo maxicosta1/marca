@@ -1,0 +1,1666 @@
+# <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrategia de Marketing — sCode Digital Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080C10;
+    --surface: #0E1420;
+    --surface2: #131A28;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00C2FF;
+    --accent2: #7B5CFF;
+    --accent3: #00FF94;
+    --text: #E8EDF5;
+    --muted: #6B7A99;
+    --danger: #FF4D6D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 4px; }
+
+  /* HEADER */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,194,255,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(123,92,255,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,194,255,0.08);
+    border: 1px solid rgba(0,194,255,0.2);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .dot-live {
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  h1 .brand { color: var(--accent); }
+  h1 .dim { color: var(--muted); font-weight: 600; }
+
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--muted);
+    max-width: 560px;
+    margin: 20px auto 40px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* NAV */
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .nav-inner {
+    display: inline-flex;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--text);
+  }
+
+  .nav-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* SECTIONS */
+  .section {
+    display: none;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  h2 .accent { color: var(--accent); }
+  h2 .accent2 { color: var(--accent2); }
+  h2 .accent3 { color: var(--accent3); }
+
+  .section-intro {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 680px;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 40px 0 16px;
+    color: var(--text);
+  }
+
+  h3 .tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .tag-blue { background: rgba(0,194,255,0.1); color: var(--accent); border: 1px solid rgba(0,194,255,0.2); }
+  .tag-purple { background: rgba(123,92,255,0.1); color: var(--accent2); border: 1px solid rgba(123,92,255,0.2); }
+  .tag-green { background: rgba(0,255,148,0.1); color: var(--accent3); border: 1px solid rgba(0,255,148,0.2); }
+  .tag-red { background: rgba(255,77,109,0.08); color: var(--danger); border: 1px solid rgba(255,77,109,0.2); }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(0,194,255,0.2); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .icon-blue { background: rgba(0,194,255,0.1); }
+  .icon-purple { background: rgba(123,92,255,0.1); }
+  .icon-green { background: rgba(0,255,148,0.1); }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: linear-gradient(135deg, rgba(0,194,255,0.06), rgba(123,92,255,0.06));
+    border: 1px solid rgba(0,194,255,0.15);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 28px 0;
+  }
+
+  .highlight-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .highlight p {
+    font-size: 20px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* COPY BOXES */
+  .copy-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .copy-box:hover {
+    border-color: rgba(123,92,255,0.4);
+    background: rgba(123,92,255,0.04);
+  }
+
+  .copy-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .copy-box p {
+    color: #c8d4e8;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .copy-hint {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .copy-box:hover .copy-hint { opacity: 1; }
+
+  .copied-toast {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background: var(--accent3);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .copied-toast.show { transform: translateY(0); opacity: 1; }
+
+  /* LISTS */
+  ul.styled {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.styled li {
+    padding: 10px 0;
+    padding-left: 20px;
+    position: relative;
+    color: #b0c0d8;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+  }
+
+  ul.styled li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  ul.styled li:last-child { border-bottom: none; }
+
+  ul.styled li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* PACKAGES */
+  .pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .pkg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .pkg-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .pkg-card.featured {
+    border-color: rgba(0,194,255,0.3);
+    background: linear-gradient(160deg, rgba(0,194,255,0.05), var(--surface));
+  }
+
+  .pkg-badge {
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .pkg-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 16px 0 4px;
+  }
+
+  .pkg-price span {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+  }
+
+  .pkg-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pkg-features {
+    list-style: none;
+    padding: 0;
+  }
+
+  .pkg-features li {
+    font-size: 13px;
+    color: #a0b0c8;
+    padding: 7px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pkg-features li::before {
+    content: '✓';
+    color: var(--accent3);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* CALENDAR */
+  .cal-week {
+    margin-bottom: 32px;
+  }
+
+  .cal-week-header {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,194,255,0.15);
+  }
+
+  .cal-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .cal-item:hover { border-color: rgba(255,255,255,0.12); }
+
+  .cal-day {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent2);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .cal-day-name {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  .cal-topic {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .cal-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .cal-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cal-reel { background: rgba(255,77,109,0.1); color: #FF7D95; border: 1px solid rgba(255,77,109,0.2); }
+  .cal-carrusel { background: rgba(0,194,255,0.1); color: var(--accent); border: 1px solid rgba(0,194,255,0.2); }
+  .cal-historia { background: rgba(0,255,148,0.1); color: var(--accent3); border: 1px solid rgba(0,255,148,0.2); }
+  .cal-post { background: rgba(123,92,255,0.1); color: var(--accent2); border: 1px solid rgba(123,92,255,0.2); }
+  .cal-wa { background: rgba(37,211,102,0.1); color: #25D366; border: 1px solid rgba(37,211,102,0.2); }
+
+  .cal-obj {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* FUNNEL */
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 640px;
+    margin: 28px auto;
+  }
+
+  .funnel-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .funnel-step:hover { border-color: rgba(0,194,255,0.2); }
+
+  .funnel-num {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.04);
+  }
+
+  .funnel-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .funnel-connector {
+    text-align: center;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  p { margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--text); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 24px; }
+    .stat-num { font-size: 26px; }
+    .card { padding: 20px; }
+    .copy-box { padding: 16px 18px; }
+    h3 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toast" class="copied-toast">✓ Copiado al portapapeles</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-badge"><span class="dot-live"></span> Estrategia 30 días · Jun 2025</div>
+  <h1><span class="brand">sCode</span><br><span class="dim">Digital Solutions</span></h1>
+  <p class="hero-sub">Estrategia completa de marketing digital para conseguir clientes reales en Mar del Plata en los próximos 30 días.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Módulos</div></div>
+    <div class="stat"><div class="stat-num">30</div><div class="stat-label">Días de contenido</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Paquetes listos</div></div>
+    <div class="stat"><div class="stat-num">+20</div><div class="stat-label">Mensajes listos</div></div>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="nav-sticky">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('pos')">01 · Posicionamiento</button>
+    <button class="nav-btn" onclick="showSection('cliente')">02 · Cliente Ideal</button>
+    <button class="nav-btn" onclick="showSection('propuesta')">03 · Propuesta de Valor</button>
+    <button class="nav-btn" onclick="showSection('contenido')">04 · Contenido Instagram</button>
+    <button class="nav-btn" onclick="showSection('mensajes')">05 · Mensajes Comerciales</button>
+    <button class="nav-btn" onclick="showSection('embudo')">06 · Embudo de Ventas</button>
+    <button class="nav-btn" onclick="showSection('paquetes')">07 · Paquetes</button>
+    <button class="nav-btn" onclick="showSection('calendario')">08 · Calendario 30 días</button>
+    <button class="nav-btn" onclick="showSection('web')">09 · Web sCode</button>
+  </div>
+</nav>
+
+<!-- ======================== SECTION 1: POSICIONAMIENTO ======================== -->
+<section class="section active" id="pos">
+  <h2>01 · <span class="accent">Posicionamiento</span> de Marca</h2>
+  <p class="section-intro">La base de todo. Antes de postear, mandar un WhatsApp o armar un presupuesto, tenés que tener claro qué sos, para quién sos y qué prometés.</p>
+
+  <h3><span class="tag tag-blue">Problema</span> Qué problema resolvemos</h3>
+  <div class="card">
+    <p>La mayoría de los negocios y profesionales en Mar del Plata operan sin presencia web real. Dependen de Instagram, que no les pertenece, no genera confianza profesional, no aparece en Google y no convierte visitas en consultas. Tienen una "presencia digital" frágil que los hace ver pequeños frente a su competencia.</p>
+    <p style="margin-top:12px"><strong>El dolor real no es "no tener web". Es estar perdiendo clientes todos los días sin saberlo.</strong> Alguien los busca en Google, no los encuentra, y llama al competidor.</p>
+  </div>
+
+  <h3><span class="tag tag-purple">Diferenciación</span> Qué nos diferencia</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚡</div> No somos una agencia genérica</div>
+      <p style="font-size:14px; color: #a0b0c8">No vendemos plantillas de Wix ni páginas armadas en serie. Cada sitio es pensado para el negocio específico: su rubro, su cliente, su objetivo.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">🎯</div> Orientados a resultados</div>
+      <p style="font-size:14px; color: #a0b0c8">No hacemos webs bonitas por el arte. Hacemos webs que consiguen consultas, llamadas y clientes. Diseño al servicio de la conversión.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🤝</div> Trato cercano, entrega rápida</div>
+      <p style="font-size:14px; color: #a0b0c8">Somos de Mar del Plata. Podemos reunirnos, entendemos el mercado local y entregamos sin burocracia de gran agencia.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">💎</div> Estética premium accesible</div>
+      <p style="font-size:14px; color: #a0b0c8">Diseño de nivel startup/multinacional para negocios locales. El cliente de una pyme merece ver algo tan bueno como el de una empresa grande.</p>
+    </div>
+  </div>
+
+  <h3><span class="tag tag-green">Presentación</span> Cómo deberíamos presentarnos</h3>
+  <div class="highlight">
+    <div class="highlight-label">✦ Línea de presentación oficial</div>
+    <p>"sCode es un estudio de desarrollo web especializado en transformar negocios y profesionales en referencias digitales de su rubro. Hacemos sitios que no solo se ven bien, sino que trabajan para conseguir clientes."</p>
+  </div>
+
+  <p style="color: var(--muted)">Evitar decir: "somos una empresa de diseño web" — es genérico y no diferencia.<br>
+  Evitar decir: "hacemos páginas" — suena a producto commoditizado.</p>
+
+  <h3><span class="tag tag-blue">Promesa</span> Promesa principal de marca</h3>
+  <div class="highlight">
+    <div class="highlight-label">✦ Promesa principal</div>
+    <p>"Tu próximo cliente te va a encontrar online. Nosotros nos encargamos de que eso pase."</p>
+  </div>
+
+  <div class="grid-2" style="margin-top:16px">
+    <div class="copy-box" onclick="copyText(this)">
+      <div class="copy-label">📌 Versión corta</div>
+      <p>Diseñamos sitios web que consiguen clientes. No solo páginas bonitas.</p>
+      <span class="copy-hint">Click para copiar</span>
+    </div>
+    <div class="copy-box" onclick="copyText(this)">
+      <div class="copy-label">📌 Versión con propósito</div>
+      <p>Convertimos tu negocio en una referencia digital. Sitios modernos, estratégicos y que trabajan 24hs para que no dependas del boca en boca.</p>
+      <span class="copy-hint">Click para copiar</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 2: CLIENTE IDEAL ======================== -->
+<section class="section" id="cliente">
+  <h2>02 · <span class="accent2">Cliente</span> Ideal</h2>
+  <p class="section-intro">No todos los clientes valen igual. Estos son los tipos más rentables y accesibles para sCode en los próximos 30 días, ordenados por potencial de cierre.</p>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon icon-blue">🧾</div> 1. Estudio Contable / Contador Independiente</div>
+    <ul class="styled">
+      <li><strong>Dolor principal:</strong> Sus clientes los buscan en Google y no aparecen. Pierden credibilidad frente a estudios más grandes que sí tienen web.</li>
+      <li><strong>Lo que quieren:</strong> Verse profesionales, generar confianza y recibir consultas sin depender del boca en boca.</li>
+      <li><strong>Mensaje clave:</strong> "Tus clientes te buscan online antes de llamarte. ¿Qué encuentran cuando te buscan?"</li>
+      <li><strong>Cómo llegar:</strong> LinkedIn, grupos de Facebook de contadores MDP, Instagram profesional, recomendación directa.</li>
+      <li><strong>Ticket estimado:</strong> $$ — Buena disposición a pagar por imagen profesional.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon icon-purple">🏨</div> 2. Hotel / Apart / Alojamiento turístico</div>
+    <ul class="styled">
+      <li><strong>Dolor principal:</strong> Dependen de Booking y Airbnb y pierden dinero en comisiones. No tienen donde recibir reservas directas.</li>
+      <li><strong>Lo que quieren:</strong> Su propio canal de reservas, verse bien y reducir comisiones.</li>
+      <li><strong>Mensaje clave:</strong> "Cada reserva por Booking te cuesta entre 15% y 25%. Con tu propia web, esa plata es tuya."</li>
+      <li><strong>Cómo llegar:</strong> Recorrida presencial por hoteles y apparts, Instagram de turismo MDP, Google Maps.</li>
+      <li><strong>Ticket estimado:</strong> $$$ — Alto potencial, ROI claro.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon icon-green">📐</div> 3. Estudio de Arquitectura / Diseñador de Interiores</div>
+    <ul class="styled">
+      <li><strong>Dolor principal:</strong> Tienen portfolio en Instagram, pero sin estructura ni credibilidad. Les cuesta diferenciarse para captar clientes de mayor nivel.</li>
+      <li><strong>Lo que quieren:</strong> Un sitio que muestre su trabajo de forma impactante y los posicione en búsquedas de obra en MDP.</li>
+      <li><strong>Mensaje clave:</strong> "Tu portfolio en Instagram se ve bien, pero se pierde entre 500 posts. Una web convierte a quienes ya están buscando contratar."</li>
+      <li><strong>Ticket estimado:</strong> $$$ — Valoran mucho la estética, buenos clientes.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon icon-blue">⚕️</div> 4. Profesional independiente (médico, psicólogo, abogado, kinesiólogo)</div>
+    <ul class="styled">
+      <li><strong>Dolor principal:</strong> Su consultorio depende de referencias y no aparece en Google cuando alguien busca "psicólogo Mar del Plata".</li>
+      <li><strong>Lo que quieren:</strong> Ser encontrados fácilmente y transmitir profesionalismo antes de la primera consulta.</li>
+      <li><strong>Mensaje clave:</strong> "El 70% de las personas busca a su próximo profesional online. ¿Aparecés cuando buscan tu especialidad en Mar del Plata?"</li>
+      <li><strong>Ticket estimado:</strong> $$ — Decisión rápida, proceso simple.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon icon-purple">🏗️</div> 5. Empresa de servicios (construcción, inmobiliaria, seguridad, limpieza)</div>
+    <ul class="styled">
+      <li><strong>Dolor principal:</strong> Tienen años de experiencia pero no lo demuestran online. Su competencia más chica los supera digitalmente.</li>
+      <li><strong>Lo que quieren:</strong> Generar confianza y captar leads sin depender solo de recomendaciones.</li>
+      <li><strong>Mensaje clave:</strong> "Tenés años de experiencia y un servicio serio. Tu presencia online debería reflejarlo."</li>
+      <li><strong>Ticket estimado:</strong> $$-$$$ — Muchos sin web todavía.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================== SECTION 3: PROPUESTA DE VALOR ======================== -->
+<section class="section" id="propuesta">
+  <h2>03 · <span class="accent3">Propuesta</span> de Valor</h2>
+  <p class="section-intro">Los textos que van a representar a sCode en cada canal. Listos para copiar y usar.</p>
+
+  <h3>Frase Principal de Venta</h3>
+  <div class="highlight">
+    <div class="highlight-label">✦ Headline principal</div>
+    <p>Diseñamos sitios web que consiguen clientes — no solo páginas que se ven bien.</p>
+  </div>
+
+  <h3>Variantes por Canal</h3>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">🌐 Para la web (hero section)</div>
+    <p>Tu negocio merece una presencia digital que trabaje para vos.
+Diseñamos sitios modernos, rápidos y estratégicos para negocios y profesionales de Mar del Plata que quieren crecer online y conseguir más clientes.
+Sin plantillas genéricas. Sin burocracia. Con resultados reales.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">📸 Para Instagram (bio)</div>
+    <p>Diseño web profesional para negocios que quieren crecer 🚀
+Mar del Plata · Sitios que consiguen clientes
+👇 Consultá sin compromiso</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">💬 Para WhatsApp (estado o primer mensaje)</div>
+    <p>En sCode diseñamos sitios web modernos para negocios y profesionales de Mar del Plata. Si tu negocio todavía no tiene web o tenés una que no te representa, podemos ayudarte a cambiar eso. Sin rodeos, sin letra chica.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">📧 Para email (asunto + intro)</div>
+    <p>Asunto: Tu próximo cliente te está buscando online, ¿te encuentra?
+
+Hola [Nombre],
+
+Te escribo desde sCode, un estudio de desarrollo web en Mar del Plata. Nos especializamos en crear sitios modernos y estratégicos para negocios y profesionales como vos que quieren tener una presencia digital real, no solo una página que "está ahí".
+
+¿Tenés 15 minutos para ver cómo podría verse tu negocio online?</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">🎯 Para presentación / propuesta</div>
+    <p>sCode es un estudio de desarrollo web en Mar del Plata. Trabajamos con negocios, profesionales y empresas que quieren una presencia digital que realmente funcione: diseño premium, carga rápida, optimización para Google y resultados medibles. No somos una agencia genérica. Somos el equipo que va a entender tu negocio y construir la web que necesitás para crecer.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+</section>
+
+<!-- ======================== SECTION 4: CONTENIDO INSTAGRAM ======================== -->
+<section class="section" id="contenido">
+  <h2>04 · Contenido para <span class="accent">Instagram</span></h2>
+  <p class="section-intro">La estrategia no es "postear más". Es postear con intención. Cada formato tiene un objetivo: atraer, educar, generar confianza o vender.</p>
+
+  <h3><span class="tag tag-red">Reels</span> Ideas de Reels (alto alcance)</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🎬 "¿Cuánto perdés por no tener web?"</div>
+      <p style="font-size:13px; color:#a0b0c8">Mostrar que si alguien busca "contador Mar del Plata" en Google y vos no aparecés, ese cliente se va a tu competencia. Dato real + estimación de pérdida mensual.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎬 Transformación: Antes / Después de una web</div>
+      <p style="font-size:13px; color:#a0b0c8">Mostrar cómo se veía un negocio sin web (solo Instagram) vs cómo se ve con una web bien hecha. Impacto visual inmediato.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎬 "3 cosas que tu web debería tener SÍ o SÍ"</div>
+      <p style="font-size:13px; color:#a0b0c8">Reel educativo rápido: llamado a la acción claro, versión mobile, y velocidad de carga. Hook fuerte al inicio.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎬 "Así se ve una web hecha con sCode" (showcase)</div>
+      <p style="font-size:13px; color:#a0b0c8">Screencast o video filmado del sitio en pantalla, con música y transiciones limpias. Sin texto, que hable el diseño.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎬 "Por qué Instagram no reemplaza una web"</div>
+      <p style="font-size:13px; color:#a0b0c8">Educativo polémico: Instagram puede cerrarte la cuenta, no te posiciona en Google, no genera confianza igual. Genera debate y shares.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎬 El proceso: cómo trabajamos en sCode</div>
+      <p style="font-size:13px; color:#a0b0c8">Mostrar las etapas: reunión → diseño → desarrollo → entrega. Humaniza la marca y destruye el mito de que es complicado o caro.</p>
+    </div>
+  </div>
+
+  <h3><span class="tag tag-blue">Carruseles</span> Carruseles Educativos</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">📊 "5 señales de que tu web está perdiendo clientes"</div>
+      <ul class="styled">
+        <li>Slide 1: Hook — "¿Tu web trabaja para vos o en tu contra?"</li>
+        <li>Slide 2-6: Una señal por slide (lenta, no es mobile, sin CTA, desactualizada, no aparece en Google)</li>
+        <li>Slide 7: CTA — "¿Cuántas tenés? Te ayudamos a solucionarlo."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 "Lo que incluye una web profesional (y lo que no)"</div>
+      <ul class="styled">
+        <li>Desmitificar el proceso. Qué hacemos, qué no hacemos, qué esperan vs qué reciben.</li>
+        <li>Ideal para generar confianza y filtrar clientes con expectativas irreales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 "Web vs Instagram: la diferencia real"</div>
+      <ul class="styled">
+        <li>Tabla comparativa visual: SEO, credibilidad, control, conversión, permanencia.</li>
+        <li>Muy compartible por otros profesionales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Caso de estudio de cliente (con permiso)</div>
+      <ul class="styled">
+        <li>Slide 1: El problema que tenía el cliente.</li>
+        <li>Slide 2-3: La solución que implementamos.</li>
+        <li>Slide 4: El resultado / feedback del cliente.</li>
+        <li>Slide 5: CTA.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3><span class="tag tag-green">Historias</span> Ideas de Stories</h3>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Poll</div>
+      <p style="font-size:13px; color:#a0b0c8">"¿Tu negocio tiene web propia?" Sí / No — Genera interacción y datos reales del mercado.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Detrás de escena</div>
+      <p style="font-size:13px; color:#a0b0c8">Mostrar el proceso de diseño, una reunión con cliente, el momento de entrega. Humaniza sCode.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Tip rápido</div>
+      <p style="font-size:13px; color:#a0b0c8">"¿Sabías que una web que tarda más de 3 segundos en cargar pierde el 53% de las visitas?" — Dato + CTA a consulta.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Testimonio</div>
+      <p style="font-size:13px; color:#a0b0c8">Captura de pantalla de WhatsApp o feedback de cliente. Autenticidad > perfección.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Countdown</div>
+      <p style="font-size:13px; color:#a0b0c8">"En X días lanzamos el sitio de [rubro]. Próximamente." — Genera expectativa antes de un showcase.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Pregunta abierta</div>
+      <p style="font-size:13px; color:#a0b0c8">"¿Cuál es el mayor problema que tenés con tu presencia online?" — Los DMs se convierten en conversaciones de venta.</p>
+    </div>
+  </div>
+
+  <h3><span class="tag tag-purple">Confianza</span> Contenido que genera confianza sin vender</h3>
+  <div class="card">
+    <ul class="styled">
+      <li><strong>Proceso de trabajo:</strong> Mostrar cómo trabajás (detallado, profesional, con plazos).</li>
+      <li><strong>Valores de marca:</strong> "En sCode no entregamos nada que no nos enorgullezca mostrar." Una frase, un fondo oscuro, tipografía limpia.</li>
+      <li><strong>Educación de mercado:</strong> Posts que ayudan al potencial cliente a entender por qué necesita lo que ofrecés.</li>
+      <li><strong>Testimonios reales:</strong> El primero que conseguís puede valer 10 posts de venta.</li>
+      <li><strong>Presentación del equipo:</strong> Foto profesional + "Hola, soy [nombre], el diseñador/dev detrás de sCode."</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================== SECTION 5: MENSAJES COMERCIALES ======================== -->
+<section class="section" id="mensajes">
+  <h2>05 · Mensajes <span class="accent2">Comerciales</span></h2>
+  <p class="section-intro">Textos listos para usar. El objetivo es iniciar conversación, no vender de entrada. Hacé clic en cada bloque para copiar.</p>
+
+  <h3>WhatsApp — Mensaje inicial (prospecto frío)</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">💬 WhatsApp frío — Versión A (directa)</div>
+    <p>Hola [Nombre], ¿cómo estás? Soy [tu nombre] de sCode, un estudio de desarrollo web en Mar del Plata.
+
+Vi que tenés [negocio/estudio] y quería preguntarte: ¿contás con una web propia? Trabajo con [contadores / estudios / profesionales] de la zona y muchos me dicen que es algo que tienen pendiente hace rato.
+
+Si te interesa, te puedo contar cómo trabajamos. Sin compromiso.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">💬 WhatsApp frío — Versión B (con contexto)</div>
+    <p>Hola [Nombre], te escribo porque vi tu perfil de Instagram / te encontré buscando [rubro] en Mar del Plata.
+
+Soy de sCode, hacemos sitios web para negocios y profesionales locales. Tengo algo armado específicamente para [su rubro] que te puede interesar ver.
+
+¿Tenés 5 minutos esta semana para una llamada rápida?</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <h3>Email — Mensaje inicial</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">📧 Email frío — Estudio contable</div>
+    <p>Asunto: ¿Tus clientes te encuentran fácil en Google?
+
+Hola [Nombre],
+
+Soy [nombre] de sCode, un estudio de desarrollo web en Mar del Plata. Me especializo en crear sitios profesionales para contadores y estudios contables que quieren mejorar su presencia digital.
+
+Muchos estudios de la zona me comentan lo mismo: tienen años de experiencia y clientes fieles, pero cuando alguien los busca en Google... no aparecen. O aparecen con información desactualizada.
+
+¿Es tu caso? Si querés, te muestro en 15 minutos cómo podría verse tu estudio online. Sin costo, sin compromiso.
+
+Saludos,
+[Tu nombre]
+sCode Digital Solutions</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <h3>Seguimiento — Si te dejan en visto</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">🔄 Follow-up #1 (3-5 días después)</div>
+    <p>Hola [Nombre], entiendo que estás ocupado. Solo quería confirmar si llegaste a ver mi mensaje anterior.
+
+Te dejo esto: hice una búsqueda rápida de "[su rubro] Mar del Plata" en Google y [no aparecés / tu web no aparece en los primeros resultados].
+
+Si alguna vez querés cambiar eso, acá estoy. Saludos.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">🔄 Follow-up #2 (cierre suave, 7-10 días)</div>
+    <p>Hola [Nombre], último mensaje, prometido.
+
+Si en algún momento querés hablar sobre presencia digital para [su negocio], encontrás mi contacto acá. No insisto más, pero la oferta queda abierta.
+
+Suerte con el negocio. 👋</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <h3>Mensaje para coordinar reunión</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">📅 Coordinar reunión / videollamada</div>
+    <p>Perfecto, me alegra que te interese.
+
+Para empezar bien, me gustaría hacerte unas preguntas cortas para entender qué necesitás. ¿Te parece si coordinamos una videollamada de 20-30 minutos?
+
+Puedo el [día] a las [hora] o el [día] a las [hora]. ¿Cuál te viene mejor?</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <h3>Mensaje post-reunión</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">✅ Después de la reunión</div>
+    <p>Hola [Nombre], gracias por el tiempo de hoy. Fue muy útil para entender bien lo que necesitás.
+
+En base a lo que conversamos, voy a prepararte una propuesta personalizada para [su negocio]. Te la mando en los próximos [1-2] días.
+
+Si te surge alguna pregunta mientras tanto, escribime sin problema. ¡Hablamos pronto!</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <h3>Mensaje para enviar presupuesto</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">💰 Envío de propuesta/presupuesto</div>
+    <p>Hola [Nombre], te comparto la propuesta que armé para [su negocio].
+
+La encontrás en el archivo adjunto. Incluye los detalles de lo que haría, los tiempos de entrega y la inversión.
+
+Lo que propongo está pensado para [objetivo específico que mencionó]: [captar más consultas / aparecer en Google / tener una web que refleje la calidad de tu trabajo].
+
+Cualquier duda o si querés ajustar algo, me avisás. ¿Cuándo te vendría bien hablar para revisarla juntos?</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+</section>
+
+<!-- ======================== SECTION 6: EMBUDO ======================== -->
+<section class="section" id="embudo">
+  <h2>06 · Embudo de <span class="accent3">Ventas</span></h2>
+  <p class="section-intro">El camino real desde "no sabe quién sos" hasta "firmamos". Cada etapa tiene acciones concretas.</p>
+
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-num">1</div>
+      <div class="funnel-title">🔍 ATRACCIÓN — Te encuentran</div>
+      <ul class="styled">
+        <li><strong>Instagram:</strong> Reels educativos sobre por qué necesitan web. Hashtags locales: #MarDelPlata #NegociosMDP #ContadoresMDP</li>
+        <li><strong>Google Maps:</strong> Perfil de sCode en Google Business Profile optimizado. Los clientes buscan "diseño web Mar del Plata".</li>
+        <li><strong>Prospección directa:</strong> Lista de 20 negocios/profesionales sin web o con web vieja. Primer contacto manual.</li>
+        <li><strong>Boca a boca:</strong> Cada cliente satisfecho puede referenciar 2-3 más. Pedilo activamente.</li>
+      </ul>
+    </div>
+    <div class="funnel-connector">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">2</div>
+      <div class="funnel-title">💬 PRIMER CONTACTO — Iniciás conversación</div>
+      <ul class="styled">
+        <li>DM en Instagram o WhatsApp con mensaje personalizado (no genérico).</li>
+        <li>Mencioná algo específico de su negocio para demostrar que lo estudiaste.</li>
+        <li>Objetivo: conseguir que respondan, no vender todavía.</li>
+        <li>Regla: <strong>1 pregunta por mensaje</strong>. No abrumar con información.</li>
+      </ul>
+    </div>
+    <div class="funnel-connector">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">3</div>
+      <div class="funnel-title">📞 DESCUBRIMIENTO — Reunión de diagnóstico</div>
+      <ul class="styled">
+        <li>Videollamada o reunión presencial de 20-30 min.</li>
+        <li>Preguntas clave: ¿Cuántos clientes nuevos conseguís por mes? ¿Cómo te encuentran? ¿Qué te gustaría mejorar?</li>
+        <li>Escuchá más de lo que hablás. El cliente te dice cómo venderle.</li>
+        <li>No menciones precio en esta etapa. Primero entendé el problema.</li>
+      </ul>
+    </div>
+    <div class="funnel-connector">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">4</div>
+      <div class="funnel-title">📋 PROPUESTA — Presentás la solución</div>
+      <ul class="styled">
+        <li>Propuesta personalizada basada en lo que escuchaste (no una plantilla genérica).</li>
+        <li>Conectá el precio con el valor: "Si la web te trae 2 clientes nuevos por mes, se paga sola en..."</li>
+        <li>Ofrecé 2 opciones máximo para evitar parálisis por elección.</li>
+        <li>Incluí testimonios o ejemplos de trabajos similares al rubro del cliente.</li>
+      </ul>
+    </div>
+    <div class="funnel-connector">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">5</div>
+      <div class="funnel-title">✅ CIERRE — Confirmás el proyecto</div>
+      <ul class="styled">
+        <li>Pregunta de cierre: "¿Querés que arrancamos con esto?" — Simple, directa.</li>
+        <li>Si duda: "¿Qué necesitás para tomar la decisión?" — Identificá el bloqueo real.</li>
+        <li>Señal de inicio: anticipo del 50% para arrancar. Genera compromiso.</li>
+        <li>Fecha de entrega clara desde el primer día. La certeza tranquiliza.</li>
+      </ul>
+    </div>
+    <div class="funnel-connector">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">6</div>
+      <div class="funnel-title">🔁 POST-VENTA — Convertís clientes en promotores</div>
+      <ul class="styled">
+        <li>Entrega con tutorial básico de uso del sitio.</li>
+        <li>Check-in a los 30 días: "¿Cómo va tu web? ¿Necesitás algo?"</li>
+        <li>Pedí testimonio o reseña en Google. El momento ideal: cuando el cliente está contento con la entrega.</li>
+        <li>Ofrecé mantenimiento mensual. Ingreso recurrente sin conseguir cliente nuevo.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 7: PAQUETES ======================== -->
+<section class="section" id="paquetes">
+  <h2>07 · <span class="accent">Paquetes</span> y Servicios</h2>
+  <p class="section-intro">Tres opciones claras. El objetivo no es ofrecer el más barato, sino que el cliente elija por valor, no por precio. Los precios son referenciales — ajustá según tu mercado.</p>
+
+  <div class="pkg-grid">
+    <div class="pkg-card">
+      <div class="pkg-name">Starter</div>
+      <div class="pkg-price">desde $200k <span>ARS</span></div>
+      <div class="pkg-desc">Para el profesional o negocio que necesita presencia digital básica pero profesional. Ideal como primer paso.</div>
+      <ul class="pkg-features">
+        <li>Landing page de 1 página</li>
+        <li>Diseño responsive (mobile + desktop)</li>
+        <li>Secciones: Inicio, Servicios, Contacto</li>
+        <li>Formulario de contacto</li>
+        <li>Botón de WhatsApp</li>
+        <li>Integración con Google Maps</li>
+        <li>Entrega en 7-10 días</li>
+        <li>1 ronda de revisiones</li>
+      </ul>
+    </div>
+
+    <div class="pkg-card featured">
+      <div class="pkg-badge">⭐ Más elegido</div>
+      <div class="pkg-name">Profesional</div>
+      <div class="pkg-price">desde $380k <span>ARS</span></div>
+      <div class="pkg-desc">El equilibrio perfecto entre presencia y estrategia. Para negocios que quieren generar confianza y captar clientes activamente.</div>
+      <ul class="pkg-features">
+        <li>Sitio completo de 4-6 secciones</li>
+        <li>Diseño responsive premium</li>
+        <li>Hero, Servicios, Nosotros, Clientes, Contacto</li>
+        <li>Optimización básica SEO</li>
+        <li>Google Analytics instalado</li>
+        <li>Formulario de contacto avanzado</li>
+        <li>WhatsApp flotante</li>
+        <li>Alta en Google Business Profile</li>
+        <li>Entrega en 10-15 días</li>
+        <li>2 rondas de revisiones</li>
+      </ul>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-name">Premium</div>
+      <div class="pkg-price">desde $650k <span>ARS</span></div>
+      <div class="pkg-desc">Para empresas y proyectos que necesitan impactar desde el primer segundo. Diseño personalizado, estrategia y más.</div>
+      <ul class="pkg-features">
+        <li>Todo lo del plan Profesional</li>
+        <li>Diseño 100% personalizado</li>
+        <li>Animaciones y microinteracciones</li>
+        <li>Blog o sección de novedades</li>
+        <li>Integración de reservas (hoteles)</li>
+        <li>SEO on-page completo</li>
+        <li>Velocidad y performance optimizadas</li>
+        <li>Panel de administración básico</li>
+        <li>Entrega en 15-20 días</li>
+        <li>3 rondas de revisiones</li>
+        <li>Soporte post-lanzamiento 30 días</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Add-on: Mantenimiento Mensual</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔧</div> Plan Básico — desde $25.000/mes</div>
+      <ul class="styled">
+        <li>Hosting y dominio incluido</li>
+        <li>Actualizaciones de contenido (2/mes)</li>
+        <li>Soporte técnico por WhatsApp</li>
+        <li>Informe mensual de visitas</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">🚀</div> Plan Crecimiento — desde $50.000/mes</div>
+      <ul class="styled">
+        <li>Todo lo del básico</li>
+        <li>Actualizaciones ilimitadas</li>
+        <li>Optimización SEO mensual</li>
+        <li>Reportes de performance</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Cómo presentar sin competir por precio</h3>
+  <div class="highlight">
+    <div class="highlight-label">✦ Estrategia de precio</div>
+    <p>Nunca compitas por precio. Competí por valor. Si un contador consigue 1 cliente nuevo por mes gracias a su web (mínimo $50.000 en honorarios), la web se paga sola en el primer mes.</p>
+  </div>
+
+  <div class="card">
+    <ul class="styled">
+      <li><strong>Anclar el precio al ROI:</strong> "Si tu web te genera 2 consultas nuevas por mes, ¿cuánto representa eso en ingresos para vos?"</li>
+      <li><strong>Comparar con el costo de no tenerla:</strong> "Cada mes sin web es un mes que perdés clientes que te buscan y no te encuentran."</li>
+      <li><strong>Mostrar alternativas peores:</strong> "Podés armar algo en Wix gratis, pero en nuestro caso obtenés diseño pensado para tu rubro."</li>
+      <li><strong>Ofrecer inicio en cuotas:</strong> 50% adelanto + 50% al entregar. Reduce la fricción del pago inicial.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================== SECTION 8: CALENDARIO ======================== -->
+<section class="section" id="calendario">
+  <h2>08 · Calendario <span class="accent2">30 Días</span></h2>
+  <p class="section-intro">Plan de contenido semana a semana. Cada publicación tiene tema, objetivo y formato. El texto sugerido es punto de partida — personalizalo con tu voz.</p>
+
+  <!-- SEMANA 1 -->
+  <div class="cal-week">
+    <div class="cal-week-header">SEMANA 1 · Presentación y Problema (días 1-7)</div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">1</div><div class="cal-day-name">Lun</div></div>
+      <div>
+        <div class="cal-topic">Presentación de sCode</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Confianza — "¿Quiénes somos y qué hacemos?" Foto del equipo/estudio + historia del porqué empezamos sCode. Humanizar la marca desde el día 1.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">2</div><div class="cal-day-name">Mar</div></div>
+      <div>
+        <div class="cal-topic">Reel: "Por qué Instagram no reemplaza una web"</div>
+        <div class="cal-meta"><span class="cal-tag cal-reel">Reel</span></div>
+        <div class="cal-obj">🎯 Alcance — Hook: "Si tu negocio vive solo en Instagram, estás construyendo sobre arena." Nombrar los 3 riesgos reales.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">3</div><div class="cal-day-name">Mié</div></div>
+      <div>
+        <div class="cal-topic">Historia interactiva: Poll</div>
+        <div class="cal-meta"><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Interacción — "¿Tu negocio tiene web propia?" Sí ✅ / No, solo Instagram ❌ — Los que dicen "no" son prospectos directos.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">4</div><div class="cal-day-name">Jue</div></div>
+      <div>
+        <div class="cal-topic">Carrusel: "5 señales de que tu web está perdiendo clientes"</div>
+        <div class="cal-meta"><span class="cal-tag cal-carrusel">Carrusel</span></div>
+        <div class="cal-obj">🎯 Educación — Muy compartible. Ideal para saves. Terminar con CTA a DM.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">5</div><div class="cal-day-name">Vie</div></div>
+      <div>
+        <div class="cal-topic">WhatsApp Status: Frase de marca</div>
+        <div class="cal-meta"><span class="cal-tag cal-wa">WhatsApp</span></div>
+        <div class="cal-obj">🎯 Visibilidad — "Tu próximo cliente te está buscando online. ¿Qué encuentra cuando te busca?" — Logo sCode, fondo oscuro.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">7</div><div class="cal-day-name">Dom</div></div>
+      <div>
+        <div class="cal-topic">Post inspiracional de domingo</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span></div>
+        <div class="cal-obj">🎯 Comunidad — "La diferencia entre un negocio que crece y uno que estanca a veces es tan simple como ser encontrado." Frase + logo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMANA 2 -->
+  <div class="cal-week">
+    <div class="cal-week-header">SEMANA 2 · Educación y Autoridad (días 8-14)</div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">8</div><div class="cal-day-name">Lun</div></div>
+      <div>
+        <div class="cal-topic">Tip: Qué es el SEO en lenguaje simple</div>
+        <div class="cal-meta"><span class="cal-tag cal-carrusel">Carrusel</span></div>
+        <div class="cal-obj">🎯 Educación — "SEO = que Google te encuentre cuando alguien busca lo que ofrecés." Sin tecnicismos. Para dueños de negocios, no devs.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">9</div><div class="cal-day-name">Mar</div></div>
+      <div>
+        <div class="cal-topic">Reel: Showcase de proyecto (antes/después o screencast)</div>
+        <div class="cal-meta"><span class="cal-tag cal-reel">Reel</span></div>
+        <div class="cal-obj">🎯 Portafolio — Mostrar trabajo real. Si no tenés cliente todavía, mostrar tu propia web con orgullo. La calidad habla.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">11</div><div class="cal-day-name">Jue</div></div>
+      <div>
+        <div class="cal-topic">Post: "¿Cuánto cuesta no tener web?" (calculadora mental)</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span></div>
+        <div class="cal-obj">🎯 Urgencia — Texto: "Si 3 personas por semana te buscan en Google y no te encuentran... son 12 oportunidades perdidas por mes. ¿Cuánto vale cada cliente para vos?"</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">12</div><div class="cal-day-name">Vie</div></div>
+      <div>
+        <div class="cal-topic">WhatsApp — Primer lote de mensajes a prospectos</div>
+        <div class="cal-meta"><span class="cal-tag cal-wa">WhatsApp</span></div>
+        <div class="cal-obj">🎯 Prospección — Contactar 10-15 negocios/profesionales identificados. Usar plantilla personalizada. Registrar respuestas.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">14</div><div class="cal-day-name">Dom</div></div>
+      <div>
+        <div class="cal-topic">Historia: "¿Qué necesita tu web para generar confianza?"</div>
+        <div class="cal-meta"><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Educación — Lista rápida de 5 puntos en stories: logo, contacto visible, testimonios, quiénes somos, CTA claro.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMANA 3 -->
+  <div class="cal-week">
+    <div class="cal-week-header">SEMANA 3 · Prueba Social y Venta Directa (días 15-21)</div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">15</div><div class="cal-day-name">Lun</div></div>
+      <div>
+        <div class="cal-topic">Testimonio de cliente o caso de éxito</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Prueba social — Si tenés testimonio, publicarlo. Si no, publicar un resultado tangible: "Lanzamos el sitio de [rubro] y en la primera semana recibieron 3 consultas."</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">16</div><div class="cal-day-name">Mar</div></div>
+      <div>
+        <div class="cal-topic">Reel: El proceso de trabajar con sCode (de 0 a web en 15 días)</div>
+        <div class="cal-meta"><span class="cal-tag cal-reel">Reel</span></div>
+        <div class="cal-obj">🎯 Confianza — Desmitificar el proceso. Paso a paso visual: reunión → wireframe → diseño → lanzamiento. Destruye el miedo a empezar.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">18</div><div class="cal-day-name">Jue</div></div>
+      <div>
+        <div class="cal-topic">Carrusel: "Web vs Instagram: la comparativa definitiva"</div>
+        <div class="cal-meta"><span class="cal-tag cal-carrusel">Carrusel</span></div>
+        <div class="cal-obj">🎯 Educación / Venta — Tabla visual. SEO, control de datos, credibilidad, reservas, conversión. Último slide: CTA directo.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">19</div><div class="cal-day-name">Vie</div></div>
+      <div>
+        <div class="cal-topic">WhatsApp — Follow-up a prospectos contactados en semana 2</div>
+        <div class="cal-meta"><span class="cal-tag cal-wa">WhatsApp</span></div>
+        <div class="cal-obj">🎯 Seguimiento — Mensaje corto de seguimiento a quien no respondió. Sin presión, con valor: incluir dato o tip relevante para su rubro.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">21</div><div class="cal-day-name">Dom</div></div>
+      <div>
+        <div class="cal-topic">Post: Oferta o propuesta de valor directa</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span></div>
+        <div class="cal-obj">🎯 Venta — "Si tu negocio todavía no tiene web, este mes arrancamos con vos. Plazas limitadas para junio. DM o link en bio." Directo y sin rodeos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMANA 4 -->
+  <div class="cal-week">
+    <div class="cal-week-header">SEMANA 4 · Cierre y Fidelización (días 22-30)</div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">22</div><div class="cal-day-name">Lun</div></div>
+      <div>
+        <div class="cal-topic">FAQ en historia: Las 5 preguntas más comunes</div>
+        <div class="cal-meta"><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Objeciones — "¿Cuánto tarda? ¿Cuánto cuesta? ¿Puedo editar yo la web? ¿Necesito saber de tecnología? ¿Qué pasa si no me gusta?" Responder con transparencia.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">23</div><div class="cal-day-name">Mar</div></div>
+      <div>
+        <div class="cal-topic">Reel: "3 errores que arruinan una web de negocios"</div>
+        <div class="cal-meta"><span class="cal-tag cal-reel">Reel</span></div>
+        <div class="cal-obj">🎯 Educación / Autoridad — No tener CTA, cargar lento en celular, no tener datos de contacto visibles. Posicionarte como experto sin vender.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">25</div><div class="cal-day-name">Jue</div></div>
+      <div>
+        <div class="cal-topic">Post de valores: Por qué hacemos lo que hacemos</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span></div>
+        <div class="cal-obj">🎯 Marca — "No hacemos páginas web. Construimos herramientas que trabajan por vos cuando dormís." Fondo oscuro, tipografía limpia, logo.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">26</div><div class="cal-day-name">Vie</div></div>
+      <div>
+        <div class="cal-topic">WhatsApp — Nuevo lote de prospectos + cierre de reuniones</div>
+        <div class="cal-meta"><span class="cal-tag cal-wa">WhatsApp</span></div>
+        <div class="cal-obj">🎯 Prospección — 2da ronda de contactos. Rubro diferente al de semana 2 (si contactaste contadores, ahora arquitectos o hoteles).</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">28</div><div class="cal-day-name">Dom</div></div>
+      <div>
+        <div class="cal-topic">Carrusel: Detrás de escena del mes</div>
+        <div class="cal-meta"><span class="cal-tag cal-carrusel">Carrusel</span></div>
+        <div class="cal-obj">🎯 Humanización — "Así fue nuestro mes en sCode": proyectos en curso, aprendizajes, logros. Cierre del primer mes de contenido con autenticidad.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div><div class="cal-day">30</div><div class="cal-day-name">Mar</div></div>
+      <div>
+        <div class="cal-topic">CTA de cierre de mes</div>
+        <div class="cal-meta"><span class="cal-tag cal-post">Post</span><span class="cal-tag cal-historia">Historia</span></div>
+        <div class="cal-obj">🎯 Conversión — "Cerramos julio con [X] proyectos nuevos. Agosto tiene [X] plazas disponibles. ¿El tuyo es uno de ellos?" DM abierto, link en bio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SECTION 9: WEB ======================== -->
+<section class="section" id="web">
+  <h2>09 · La Web de <span class="accent3">sCode</span></h2>
+  <p class="section-intro">Tu web es tu vendedor 24/7. Si convierte bien, cierra proyectos mientras dormís. Si no convierte, todo el esfuerzo de marketing se pierde ahí.</p>
+
+  <h3><span class="tag tag-blue">Estructura</span> Secciones recomendadas (en orden)</h3>
+
+  <div class="card">
+    <div class="card-title">01 · HERO — La primera impresión</div>
+    <ul class="styled">
+      <li><strong>Headline:</strong> "Diseñamos sitios web que consiguen clientes."</li>
+      <li><strong>Subtítulo:</strong> "Somos sCode, un estudio de desarrollo web en Mar del Plata. Creamos presencias digitales modernas para negocios y profesionales que quieren crecer."</li>
+      <li><strong>CTA principal:</strong> Botón "Quiero mi web" → lleva a formulario o WhatsApp.</li>
+      <li><strong>CTA secundario:</strong> "Ver proyectos" → scroll a portafolio.</li>
+      <li><strong>Visual:</strong> Mockup animado de una web en pantalla. Fondo oscuro con detalles de código o grid sutil.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">02 · PROPUESTA DE VALOR — Por qué sCode</div>
+    <ul class="styled">
+      <li>3 columnas: Diseño Premium / Entrega Rápida / Resultados Medibles.</li>
+      <li>Cada columna: ícono + título + 2 líneas de descripción.</li>
+      <li>Fondo ligeramente diferente al hero para crear separación visual.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">03 · SERVICIOS — Qué hacemos</div>
+    <ul class="styled">
+      <li>Cards visuales: Landing Page / Sitio Institucional / E-commerce básico / Mantenimiento.</li>
+      <li>Cada card: nombre + descripción corta + para quién es + CTA.</li>
+      <li>Incluir precio base o rango: genera confianza y filtra clientes.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">04 · PORTAFOLIO — Proyectos realizados</div>
+    <ul class="styled">
+      <li>Grid de proyectos: imagen + nombre del cliente + rubro + link al sitio.</li>
+      <li>Si estás empezando, incluí proyectos propios o conceptuales bien hechos.</li>
+      <li>Mejor 3 proyectos impecables que 10 mediocres.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">05 · PROCESO — Cómo trabajamos</div>
+    <ul class="styled">
+      <li>Timeline horizontal: Reunión → Propuesta → Diseño → Desarrollo → Entrega.</li>
+      <li>Desmitificar el proceso es clave para bajar la barrera de entrada.</li>
+      <li>"Sin tecnicismos, sin burocracia. En 15 días tu negocio tiene web."</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">06 · TESTIMONIOS — Prueba social</div>
+    <ul class="styled">
+      <li>3-5 testimonios reales con foto, nombre, empresa y rubro.</li>
+      <li>Si no los tenés aún, reemplazá con estadísticas: "+12 proyectos entregados / 100% clientes satisfechos".</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">07 · PAQUETES / PRECIOS</div>
+    <ul class="styled">
+      <li>Mostrar los 3 paquetes con claridad. La transparencia genera confianza.</li>
+      <li>Destacar el del medio como "más elegido".</li>
+      <li>CTA en cada paquete: "Empezar con este plan".</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">08 · CONTACTO — El cierre</div>
+    <ul class="styled">
+      <li>Formulario simple: Nombre, Email, Teléfono, "¿Sobre qué necesitás ayuda?"</li>
+      <li>Botón de WhatsApp flotante siempre visible.</li>
+      <li>Título de sección: "Arrancamos cuando quieras."</li>
+      <li>Horario de respuesta: "Respondemos en menos de 24hs."</li>
+    </ul>
+  </div>
+
+  <h3><span class="tag tag-green">Conversión</span> Cómo aumentar conversiones</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🎯 CTAs estratégicos</div>
+      <ul class="styled">
+        <li>CTA en el hero, al final de cada sección y en el footer.</li>
+        <li>Usar verbos activos: "Quiero mi web" / "Empezar ahora" / "Consultá gratis".</li>
+        <li>Evitar: "Contáctanos" (genérico) / "Enviar" (sin propósito).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚡ Velocidad y Mobile</div>
+      <ul class="styled">
+        <li>Tu web debe cargar en menos de 2 segundos.</li>
+        <li>Diseño mobile-first. El 70% de las visitas vendrán de celular.</li>
+        <li>Botón de WhatsApp siempre visible en mobile.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📍 SEO Local</div>
+      <ul class="styled">
+        <li>Incluir "Mar del Plata" en título, meta descripción y H1.</li>
+        <li>Google Business Profile completado al 100%.</li>
+        <li>Pedir reseñas a clientes satisfechos.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">💬 WhatsApp Widget</div>
+      <ul class="styled">
+        <li>Mensaje predefinido: "Hola, quiero saber más sobre los servicios de sCode."</li>
+        <li>Visible en todas las páginas, especialmente en mobile.</li>
+        <li>Este botón puede duplicar las consultas entrantes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Textos clave para la web</h3>
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">🖥️ Hero Headline + Subtitle</div>
+    <p>Diseñamos sitios web que consiguen clientes.
+
+Somos sCode, un estudio de desarrollo web en Mar del Plata. Creamos presencias digitales modernas, rápidas y estratégicas para negocios y profesionales que quieren dejar de depender del boca en boca.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">📞 Sección de contacto</div>
+    <p>Arrancamos cuando quieras.
+Contanos tu proyecto y en menos de 24hs te respondemos con ideas concretas. Sin tecnicismos, sin letra chica. Solo resultados.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+
+  <div class="copy-box" onclick="copyText(this)">
+    <div class="copy-label">⭐ Sobre nosotros</div>
+    <p>Somos un equipo de diseñadores y desarrolladores de Mar del Plata con una obsesión: crear sitios web que no solo se ven bien, sino que trabajan para conseguir clientes.
+No somos una agencia genérica. Somos el equipo que entiende tu negocio, habla tu idioma y entrega resultados reales.</p>
+    <span class="copy-hint">Click para copiar</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">sCode Digital Solutions</div>
+  <p>Estrategia de Marketing Digital · Documento de uso interno</p>
+  <p style="margin-top:8px; font-size:12px; opacity:0.5">Hacé clic en cualquier bloque de texto para copiarlo al portapapeles.</p>
+</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const btns = document.querySelectorAll('.nav-btn');
+    const sectionMap = {
+      'pos': 0, 'cliente': 1, 'propuesta': 2, 'contenido': 3,
+      'mensajes': 4, 'embudo': 5, 'paquetes': 6, 'calendario': 7, 'web': 8
+    };
+    btns[sectionMap[id]].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function copyText(el) {
+    const text = el.querySelector('p').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+  }
+</script>
+</body>
+</html>
